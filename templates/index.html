@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Python Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a47a3;
+            margin-bottom: 30px;
+        }
+
+        .question-card {
+            background: #f4f4f9;
+            border-left: 5px solid #4a47a3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-left-color: green;
+            background-color: #d4edda;
+        }
+
+        .question-card.wrong {
+            border-left-color: red;
+            background-color: #f8d7da;
+        }
+
+        .question-card p {
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background: #4a47a3;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0 auto;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #37349d;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 25px;
+            color: #4a47a3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Mini Python Test</h1>
+    <form id="quizForm" method="post">
+        {% for i in range(sorular|length) %}
+        <div class="question-card" id="q{{ i }}">
+            <p>{{ i + 1 }}. {{ sorular[i][0] }}</p>
+            <div class="options">
+                {% for secenek in sorular[i][1] %}
+                <label>
+                    <input type="radio" name="q{{ i }}" value="{{ secenek }}" required> {{ secenek }}
+                </label><br>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <button type="submit">Testi Bitir</button>
+    </form>
+
+    {% if puan is not none %}
+    <div id="result">Sonuç: {{ puan }} / {{ sorular|length }}</div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('quizForm');
+
+    form.addEventListener('submit', function(e) {
+        // Sayfanın yeniden yüklenmesini engelle
+        e.preventDefault();
+
+        const sorular = {{ sorular|tojson }};
+        let score = 0;
+
+        for (let i = 0; i < sorular.length; i++) {
+            const qCard = document.getElementById('q' + i);
+            const radios = document.getElementsByName('q' + i);
+            let selected = null;
+            for (const r of radios) {
+                if (r.checked) {
+                    selected = r.value;
+                }
+            }
+
+            if (selected === sorular[i][2]) {
+                qCard.classList.add('correct');
+                score++;
+            } else {
+                qCard.classList.add('wrong');
+            }
+        }
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerText = 'Sonuç: ' + score + ' / ' + sorular.length;
+    });
+});
+</script>
+
+</body>
+</html>
+
