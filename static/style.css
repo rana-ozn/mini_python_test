@@ -1,0 +1,44 @@
+body {
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+.card {
+    background: rgba(0,0,0,0.6);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #00f2ff;
+    width: 400px;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 15px #00f2ff; }
+    to { box-shadow: 0 0 30px #00f2ff; }
+}
+
+button {
+    background: linear-gradient(90deg, #00f2ff, #7cffcb);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+}
