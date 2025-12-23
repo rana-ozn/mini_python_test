@@ -1,16 +1,18 @@
-import os
-import json
+import os, json
 from dotenv import load_dotenv
 from google import genai
 
 load_dotenv()
-
 API_KEY = os.getenv("GEMINI_API_KEY")
 
-def ai_soru_uret():
-    # API key yoksa bile sistem çalışsın
+def ai_soru_uret(zorluk="orta"):
+    seviye = {
+        "kolay": "kolay seviye",
+        "orta": "orta seviye",
+        "zor": "zor seviye"
+    }.get(zorluk, "orta seviye")
+
     if not API_KEY:
-        print("❌ GEMINI_API_KEY yok, fallback soru dönülüyor")
         return {
             "soru": "Python'da list comprehension ne işe yarar?",
             "siklar": [
@@ -20,21 +22,24 @@ def ai_soru_uret():
                 "Hata ayıklar",
                 "Class oluşturur"
             ],
-            "dogru": "Tek satırda liste üretir"
+            "dogru": "Tek satırda liste üretir",
+            "aciklama": "List comprehension, Python'da kısa ve okunabilir şekilde liste üretmeyi sağlar."
         }
 
     try:
         client = genai.Client(api_key=API_KEY)
 
         prompt = (
-            "Orta seviye bir yazılım sorusu üret. "
-            "Python veya JavaScript olabilir. "
+            f"{seviye} bir Python veya JavaScript sorusu üret. "
+            "Kod içerebilir. "
             "5 şık olsun. "
-            "SADECE şu formatta JSON döndür: "
+            "Yanlış cevap için kısa açıklama ekle. "
+            "SADECE şu JSON formatında cevap ver:\n"
             "{"
             "\"soru\": \"...\", "
             "\"siklar\": [\"A\",\"B\",\"C\",\"D\",\"E\"], "
-            "\"dogru\": \"...\""
+            "\"dogru\": \"...\", "
+            "\"aciklama\": \"Neden bu cevap doğru?\""
             "}"
         )
 
@@ -43,15 +48,13 @@ def ai_soru_uret():
             contents=prompt
         )
 
-        text = response.text.strip()
-        text = text.replace("```json", "").replace("```", "").strip()
-
+        text = response.text.replace("```json", "").replace("```", "").strip()
         return json.loads(text)
 
-    except Exception as e:
-        print("❌ Gemini hata:", e)
+    except Exception:
         return {
             "soru": "Python'da dictionary hangi parantez ile tanımlanır?",
             "siklar": ["()", "[]", "{}", "<>", "||"],
-            "dogru": "{}"
+            "dogru": "{}",
+            "aciklama": "Dictionary veri tipi süslü parantez {} ile tanımlanır."
         }

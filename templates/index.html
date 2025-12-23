@@ -3,32 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>🤖 AI Python Quiz</title>
-
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
 <div class="container">
-    <h1>🤖 Yapay Zeka Destekli Quiz</h1>
 
-    <div class="card">
-        <h2 id="soru">Yükleniyor...</h2>
-
-        <div id="siklar"></div>
-
-        <p id="sonuc"></p>
-
-        <button onclick="yeniSoru()">🔄 Yeni Soru Üret</button>
+    <!-- GİRİŞ -->
+    <div class="card" id="welcome">
+        <h1>🤖 AI Python Quiz</h1>
+        <p>Yapay zekâ tarafından üretilen açıklamalı yazılım soruları.</p>
+        <button onclick="goLevel()">Teste Başla</button>
     </div>
+
+    <!-- ZORLUK -->
+    <div class="card hidden" id="level">
+        <h2>Zorluk Seç</h2>
+        <button onclick="setLevel('kolay')">🟢 Kolay</button>
+        <button onclick="setLevel('orta')">🟡 Orta</button>
+        <button onclick="setLevel('zor')">🔴 Zor</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="card hidden" id="quiz">
+        <h2 id="soru">Yükleniyor...</h2>
+        <div id="siklar"></div>
+        <p id="sonuc"></p>
+        <p id="aciklama"></p>
+        <button onclick="yeniSoru()">🔄 Yeni Soru</button>
+    </div>
+
 </div>
 
-<!-- JS -->
 <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 </body>
 </html>

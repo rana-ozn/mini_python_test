@@ -1,44 +1,55 @@
 body {
-    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    margin: 0;
     height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Segoe UI', sans-serif;
     color: white;
 }
 
-.card {
-    background: rgba(0,0,0,0.6);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px #00f2ff;
-    width: 400px;
-    text-align: center;
-    animation: glow 2s infinite alternate;
+.container {
+    width: 420px;
+    max-width: 95vw;
 }
 
-@keyframes glow {
-    from { box-shadow: 0 0 15px #00f2ff; }
-    to { box-shadow: 0 0 30px #00f2ff; }
+.card {
+    background: rgba(0,0,0,0.65);
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.hidden { display: none; }
+
+#soru {
+    font-size: 15px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.secenek {
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    cursor: pointer;
+}
+
+.secenek.dogru { background: rgba(0,200,120,0.8); }
+.secenek.yanlis { background: rgba(220,70,70,0.8); }
+
+#aciklama {
+    font-size: 13px;
+    opacity: 0.85;
+    white-space: pre-wrap;
 }
 
 button {
-    background: linear-gradient(90deg, #00f2ff, #7cffcb);
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 16px;
     border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-}
-
-button:hover {
-    transform: scale(1.05);
-}
-
-label {
-    display: block;
-    margin: 10px 0;
-    cursor: pointer;
 }

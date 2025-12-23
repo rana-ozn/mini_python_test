@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from ai_questions import ai_soru_uret
 
 app = Flask(__name__)
@@ -7,11 +7,11 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-# ⚠️ DİKKAT: JS BURAYA İSTEK ATIYOR
+# JS buraya istek atıyor
 @app.route("/soru")
 def soru():
-    soru = ai_soru_uret()
-    return jsonify(soru)
+    zorluk = request.args.get("zorluk", "orta")
+    return jsonify(ai_soru_uret(zorluk))
 
 if __name__ == "__main__":
     app.run(debug=True)
